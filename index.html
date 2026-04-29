@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MultiFix | Servicios para el hogar en Medellín</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Ir al inicio">
+          <img class="brand-logo" src="./assets/multifix-logo.png" alt="MultiFix" />
+          <span>
+            <small>Expertos verificados a un toque de distancia</small>
+          </span>
+        </a>
+        <nav class="top-actions" aria-label="Acciones de cuenta">
+          <button class="ghost-btn" data-scroll-to="terms-panel">Términos</button>
+          <button class="ghost-btn" data-open-auth="login">Iniciar sesión</button>
+          <button class="primary-btn" data-open-auth="register">Registrarse</button>
+        </nav>
+      </header>
+
+      <main>
+        <section class="hero" aria-labelledby="hero-title">
+          <div class="hero-copy">
+            <span class="eyebrow">Medellín y área metropolitana</span>
+            <h1 id="hero-title">Expertos verificados a un toque de distancia</h1>
+            <p>
+              Solicita plomeros, pintores, carpinteros, mecánicos y más. Cada
+              prestador puede validar su experiencia con certificados, fotos de
+              trabajos y calificaciones reales antes de atender servicios en Medellín.
+            </p>
+            <div class="hero-actions">
+              <button class="primary-btn large" data-open-auth="register">Pedir un servicio</button>
+              <button class="secondary-btn large" data-scroll-to="provider-panel">Ser prestador</button>
+            </div>
+          </div>
+          <div class="booking-panel" aria-label="Solicitud rápida de servicio">
+            <div class="panel-header">
+              <span>Solicitud rápida</span>
+              <strong id="estimated-price">$85.000</strong>
+            </div>
+            <label>
+              Servicio
+              <select id="service-select">
+                <option value="85000">Plomería</option>
+                <option value="120000">Carpintería</option>
+                <option value="95000">Pintura</option>
+                <option value="110000">Mecánica</option>
+                <option value="70000">Electricidad</option>
+              </select>
+            </label>
+            <label>
+              Ubicación
+              <input type="text" value="Medellín, Antioquia" />
+            </label>
+            <div class="trust-box">
+              <div>
+                <strong>Prestadores verificados</strong>
+                <span>Revisión de documentos, evidencias y calificaciones.</span>
+              </div>
+              <div>
+                <strong>Solicitud protegida</strong>
+                <span>Historial del servicio y soporte ante novedades.</span>
+              </div>
+            </div>
+            <button class="primary-btn full" data-open-auth="register">Continuar</button>
+          </div>
+        </section>
+
+        <section class="safety-section" aria-labelledby="safety-title">
+          <div class="section-intro">
+            <span class="eyebrow">Confianza para contratar</span>
+            <h2 id="safety-title">Más seguridad antes, durante y después del servicio</h2>
+          </div>
+          <div class="safety-grid">
+            <article class="safety-card">
+              <span class="safety-icon">✓</span>
+              <h3>Perfiles revisados</h3>
+              <p>El prestador debe aportar evidencias de experiencia antes de mostrarse como recomendado.</p>
+            </article>
+            <article class="safety-card">
+              <span class="safety-icon">★</span>
+              <h3>Calificaciones reales</h3>
+              <p>Los usuarios pueden valorar puntualidad, calidad del trabajo y trato recibido.</p>
+            </article>
+            <article class="safety-card">
+              <span class="safety-icon">!</span>
+              <h3>Soporte y reclamos</h3>
+              <p>MultiFix conserva el detalle del servicio para revisar novedades y mediar cuando sea necesario.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="category-strip" aria-label="Categorías principales">
+          <button class="category active" data-service="Plomería">Plomería</button>
+          <button class="category" data-service="Carpintería">Carpintería</button>
+          <button class="category" data-service="Pintura">Pintura</button>
+          <button class="category" data-service="Mecánica">Mecánica</button>
+          <button class="category" data-service="Electricidad">Electricidad</button>
+        </section>
+
+        <section class="main-grid">
+          <div class="section-intro">
+            <span class="eyebrow">Disponibles ahora en Medellín</span>
+            <h2>Prestadores recomendados</h2>
+          </div>
+          <div class="providers" id="providers-list"></div>
+        </section>
+
+        <section class="provider-flow" id="provider-panel">
+          <div>
+            <span class="eyebrow">Para trabajadores independientes</span>
+            <h2>Registra tu oficio y verifica tu experiencia</h2>
+            <p>
+              El perfil del prestador incluye documentos de soporte, fotos de
+              trabajos realizados, zona de atención, tarifa base y estado de
+              verificación.
+            </p>
+            <div class="provider-terms">
+              <strong>Comisión para prestadores</strong>
+              <span>
+                MultiFix cobra una comisión del 12% únicamente sobre servicios
+                finalizados dentro de la plataforma. El detalle se informa antes
+                de aceptar cada trabajo.
+              </span>
+            </div>
+          </div>
+          <form class="verification-card">
+            <label>
+              Oficio principal
+              <input type="text" placeholder="Ej: Pintor de interiores" />
+            </label>
+            <label>
+              Evidencia
+              <select>
+                <option>Certificado de estudio</option>
+                <option>Fotos de trabajos realizados</option>
+                <option>Registro de negocio</option>
+                <option>Referencia de clientes</option>
+              </select>
+            </label>
+            <label>
+              Descripción corta
+              <textarea placeholder="Cuéntanos tu experiencia, ciudad y tipo de servicios."></textarea>
+            </label>
+            <button class="primary-btn full" type="button">Enviar a revisión</button>
+          </form>
+        </section>
+
+        <section class="terms-section" id="terms-panel" aria-labelledby="terms-title">
+          <div class="section-intro">
+            <span class="eyebrow">Información de la plataforma</span>
+            <h2 id="terms-title">Términos claros para usuarios y prestadores</h2>
+            <p>
+              Consulta las condiciones principales de uso, verificación, pagos,
+              soporte y tratamiento de información dentro de MultiFix.
+            </p>
+          </div>
+          <div class="terms-grid">
+            <article class="terms-card">
+              <h3>Para usuarios</h3>
+              <p>El precio estimado se muestra antes de solicitar. El usuario puede revisar perfil, evidencias y calificaciones antes de contratar.</p>
+            </article>
+            <article class="terms-card">
+              <h3>Para prestadores</h3>
+              <p>La comisión de plataforma se aplica al prestador sobre servicios finalizados. Las tarifas y cobros deben ser visibles antes de aceptar.</p>
+            </article>
+            <article class="terms-card">
+              <h3>Privacidad y soporte</h3>
+              <p>La información personal y evidencias se usan para verificación, seguridad, soporte y mejora del servicio.</p>
+            </article>
+          </div>
+        </section>
+
+      </main>
+
+      <footer class="footer">
+        <span>MultiFix</span>
+        <button class="footer-link" data-scroll-to="terms-panel">Términos y condiciones</button>
+      </footer>
+    </div>
+
+    <div class="auth-modal" id="auth-modal" aria-hidden="true">
+      <div class="modal-backdrop" data-close-auth></div>
+      <section class="auth-card" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+        <button class="close-btn" data-close-auth aria-label="Cerrar">x</button>
+        <div class="tabs" role="tablist">
+          <button class="tab active" data-auth-tab="login">Inicio de sesión</button>
+          <button class="tab" data-auth-tab="register">Registro</button>
+        </div>
+        <form class="auth-form active" id="login-form">
+          <h2 id="auth-title">Bienvenido de nuevo</h2>
+          <label>
+            Correo
+            <input type="email" placeholder="correo@ejemplo.com" required />
+          </label>
+          <label>
+            Contraseña
+            <input type="password" placeholder="Tu contraseña" required />
+          </label>
+          <button class="primary-btn full" type="submit">Entrar</button>
+        </form>
+        <form class="auth-form" id="register-form">
+          <h2>Crea tu cuenta</h2>
+          <label>
+            Nombre completo
+            <input type="text" placeholder="Tu nombre" required />
+          </label>
+          <label>
+            Correo
+            <input type="email" placeholder="correo@ejemplo.com" required />
+          </label>
+          <label>
+            Tipo de cuenta
+            <select required>
+              <option>Necesito un servicio</option>
+              <option>Quiero prestar servicios</option>
+            </select>
+          </label>
+          <label>
+            Contraseña
+            <input type="password" placeholder="Crea una contraseña" required />
+          </label>
+          <button class="primary-btn full" type="submit">Crear cuenta</button>
+        </form>
+        <p class="form-note" id="auth-message">Tus datos se validan para proteger tu cuenta y tus solicitudes.</p>
+      </section>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
