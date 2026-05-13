@@ -1,241 +1,802 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MultiFix | Servicios para el hogar en Medellín</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="./styles.css" />
-  </head>
-  <body>
-    <div class="app-shell">
-      <header class="topbar">
-        <a class="brand" href="#" aria-label="Ir al inicio">
-          <img class="brand-logo" src="./assets/multifix-logo.png" alt="MultiFix" />
-          <span>
-            <small>Expertos verificados a un toque de distancia</small>
-          </span>
-        </a>
-        <nav class="top-actions" aria-label="Acciones de cuenta">
-          <button class="ghost-btn" data-scroll-to="terms-panel">Términos</button>
-          <button class="ghost-btn" data-open-auth="login">Iniciar sesión</button>
-          <button class="primary-btn" data-open-auth="register">Registrarse</button>
-        </nav>
-      </header>
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta name="theme-color" content="#FF5722"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+  <meta name="apple-mobile-web-app-title" content="MultiFix"/>
+  <meta name="description" content="Expertos del hogar verificados a un toque de distancia. Medellín y área metropolitana."/>
 
-      <main>
-        <section class="hero" aria-labelledby="hero-title">
-          <div class="hero-copy">
-            <span class="eyebrow">Medellín y área metropolitana</span>
-            <h1 id="hero-title">Expertos verificados a un toque de distancia</h1>
-            <p>
-              Solicita plomeros, pintores, carpinteros, mecánicos y más. Cada
-              prestador puede validar su experiencia con certificados, fotos de
-              trabajos y calificaciones reales antes de atender servicios en Medellín.
-            </p>
-            <div class="hero-actions">
-              <button class="primary-btn large" data-open-auth="register">Pedir un servicio</button>
-              <button class="secondary-btn large" data-scroll-to="provider-panel">Ser prestador</button>
-            </div>
-          </div>
-          <div class="booking-panel" aria-label="Solicitud rápida de servicio">
-            <div class="panel-header">
-              <span>Solicitud rápida</span>
-              <strong id="estimated-price">$85.000</strong>
-            </div>
-            <label>
-              Servicio
-              <select id="service-select">
-                <option value="85000">Plomería</option>
-                <option value="120000">Carpintería</option>
-                <option value="95000">Pintura</option>
-                <option value="110000">Mecánica</option>
-                <option value="70000">Electricidad</option>
-              </select>
-            </label>
-            <label>
-              Ubicación
-              <input type="text" value="Medellín, Antioquia" />
-            </label>
-            <div class="trust-box">
-              <div>
-                <strong>Prestadores verificados</strong>
-                <span>Revisión de documentos, evidencias y calificaciones.</span>
-              </div>
-              <div>
-                <strong>Solicitud protegida</strong>
-                <span>Historial del servicio y soporte ante novedades.</span>
-              </div>
-            </div>
-            <button class="primary-btn full" data-open-auth="register">Continuar</button>
-          </div>
-        </section>
+  <title>MultiFix</title>
 
-        <section class="safety-section" aria-labelledby="safety-title">
-          <div class="section-intro">
-            <span class="eyebrow">Confianza para contratar</span>
-            <h2 id="safety-title">Más seguridad antes, durante y después del servicio</h2>
-          </div>
-          <div class="safety-grid">
-            <article class="safety-card">
-              <span class="safety-icon">✓</span>
-              <h3>Perfiles revisados</h3>
-              <p>El prestador debe aportar evidencias de experiencia antes de mostrarse como recomendado.</p>
-            </article>
-            <article class="safety-card">
-              <span class="safety-icon">★</span>
-              <h3>Calificaciones reales</h3>
-              <p>Los usuarios pueden valorar puntualidad, calidad del trabajo y trato recibido.</p>
-            </article>
-            <article class="safety-card">
-              <span class="safety-icon">!</span>
-              <h3>Soporte y reclamos</h3>
-              <p>MultiFix conserva el detalle del servicio para revisar novedades y mediar cuando sea necesario.</p>
-            </article>
-          </div>
-        </section>
+  <!-- PWA manifest -->
+  <link rel="manifest" href="manifest.json"/>
 
-        <section class="category-strip" aria-label="Categorías principales">
-          <button class="category active" data-service="Plomería">Plomería</button>
-          <button class="category" data-service="Carpintería">Carpintería</button>
-          <button class="category" data-service="Pintura">Pintura</button>
-          <button class="category" data-service="Mecánica">Mecánica</button>
-          <button class="category" data-service="Electricidad">Electricidad</button>
-        </section>
+  <!-- Apple splash / icons -->
+  <link rel="apple-touch-icon" href="multifix-logo-original.png"/>
 
-        <section class="main-grid">
-          <div class="section-intro">
-            <span class="eyebrow">Disponibles ahora en Medellín</span>
-            <h2>Prestadores recomendados</h2>
-          </div>
-          <div class="providers" id="providers-list"></div>
-        </section>
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
 
-        <section class="provider-flow" id="provider-panel">
-          <div>
-            <span class="eyebrow">Para trabajadores independientes</span>
-            <h2>Registra tu oficio y verifica tu experiencia</h2>
-            <p>
-              El perfil del prestador incluye documentos de soporte, fotos de
-              trabajos realizados, zona de atención, tarifa base y estado de
-              verificación.
-            </p>
-            <div class="provider-terms">
-              <strong>Comisión para prestadores</strong>
-              <span>
-                MultiFix cobra una comisión del 12% únicamente sobre servicios
-                finalizados dentro de la plataforma. El detalle se informa antes
-                de aceptar cada trabajo.
-              </span>
-            </div>
-          </div>
-          <form class="verification-card">
-            <label>
-              Oficio principal
-              <input type="text" placeholder="Ej: Pintor de interiores" />
-            </label>
-            <label>
-              Evidencia
-              <select>
-                <option>Certificado de estudio</option>
-                <option>Fotos de trabajos realizados</option>
-                <option>Registro de negocio</option>
-                <option>Referencia de clientes</option>
-              </select>
-            </label>
-            <label>
-              Descripción corta
-              <textarea placeholder="Cuéntanos tu experiencia, ciudad y tipo de servicios."></textarea>
-            </label>
-            <button class="primary-btn full" type="button">Enviar a revisión</button>
-          </form>
-        </section>
+  <style>
+    /* ── RESET & BASE ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    html, body { height: 100%; overflow: hidden; background: #1E3A5F; }
+    body { font-family: 'Outfit', sans-serif; }
 
-        <section class="terms-section" id="terms-panel" aria-labelledby="terms-title">
-          <div class="section-intro">
-            <span class="eyebrow">Información de la plataforma</span>
-            <h2 id="terms-title">Términos claros para usuarios y prestadores</h2>
-            <p>
-              Consulta las condiciones principales de uso, verificación, pagos,
-              soporte y tratamiento de información dentro de MultiFix.
-            </p>
-          </div>
-          <div class="terms-grid">
-            <article class="terms-card">
-              <h3>Para usuarios</h3>
-              <p>El precio estimado se muestra antes de solicitar. El usuario puede revisar perfil, evidencias y calificaciones antes de contratar.</p>
-            </article>
-            <article class="terms-card">
-              <h3>Para prestadores</h3>
-              <p>La comisión de plataforma se aplica al prestador sobre servicios finalizados. Las tarifas y cobros deben ser visibles antes de aceptar.</p>
-            </article>
-            <article class="terms-card">
-              <h3>Privacidad y soporte</h3>
-              <p>La información personal y evidencias se usan para verificación, seguridad, soporte y mejora del servicio.</p>
-            </article>
-          </div>
-        </section>
+    /* ── APP SHELL ── */
+    #app {
+      position: fixed; inset: 0;
+      max-width: 430px; margin: 0 auto;
+      background: #F2F2F7;
+      overflow: hidden;
+    }
 
-      </main>
+    /* ── STATUS BAR ── */
+    #status-bar {
+      position: absolute; top: 0; left: 0; right: 0; height: 44px;
+      background: #FF5722; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 20px; transition: background .3s;
+    }
+    #sb-time { color: white; font-size: 13px; font-weight: 600; }
+    #sb-pill { background: #111; border-radius: 14px; position: absolute; left: 50%; transform: translateX(-50%); top: 9px; width: 110px; height: 24px; }
+    #sb-icons { display: flex; gap: 4px; align-items: center; }
 
-      <footer class="footer">
-        <span>MultiFix</span>
-        <button class="footer-link" data-scroll-to="terms-panel">Términos y condiciones</button>
-      </footer>
+    /* ── SCREENS ── */
+    .screen {
+      position: absolute; top: 44px; left: 0; right: 0; bottom: 60px;
+      overflow-y: auto; overflow-x: hidden;
+      transition: transform .32s cubic-bezier(.4,0,.2,1);
+      background: #F2F2F7;
+      -webkit-overflow-scrolling: touch;
+    }
+    .screen.no-nav { bottom: 0; }
+    .screen.off { transform: translateX(100%); }
+    .screen::-webkit-scrollbar { display: none; }
+
+    /* ── BOTTOM NAV ── */
+    #bottom-nav {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 60px;
+      background: white; border-top: 1px solid #E5E5EA;
+      display: flex; align-items: center; z-index: 50;
+    }
+    .nb { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; flex: 1; background: none; border: none; cursor: pointer; font-family: 'Outfit', sans-serif; height: 100%; }
+
+    /* ── UTILITY CLASSES ── */
+    .btn-primary { background: #FF5722; color: white; border: none; border-radius: 14px; padding: 14px; font-size: 15px; font-weight: 700; cursor: pointer; width: 100%; font-family: 'Outfit', sans-serif; }
+    .btn-primary:active { opacity: .87; }
+    .btn-ghost { background: none; border: none; cursor: pointer; font-family: 'Outfit', sans-serif; padding: 0; display: flex; align-items: center; }
+    .card { background: white; border-radius: 16px; border: 1px solid #E5E5EA; padding: 16px; margin-bottom: 12px; }
+    .inp { width: 100%; padding: 13px 15px; background: #F2F2F7; border: none; border-radius: 12px; font-size: 14px; font-family: 'Outfit', sans-serif; color: #1A1A1A; outline: none; }
+    .inp::placeholder { color: #BBB; }
+    .cat-chip { background: white; border: 1px solid #E5E5EA; border-radius: 22px; padding: 7px 13px; font-size: 12px; font-weight: 600; color: #555; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; gap: 5px; flex-shrink: 0; transition: all .15s; }
+    .cat-chip.on { background: #FF5722; border-color: #FF5722; color: white; }
+    .time-slot { background: white; border: 1px solid #E5E5EA; border-radius: 10px; padding: 9px; font-size: 12px; font-weight: 600; color: #444; cursor: pointer; text-align: center; font-family: 'Outfit', sans-serif; transition: all .15s; }
+    .time-slot.on { background: #FFF0EB; border-color: #FF5722; color: #FF5722; }
+    .vtag { background: #E8F5E9; color: #2E7D32; padding: 2px 7px; border-radius: 20px; font-size: 10px; font-weight: 700; display: inline-flex; align-items: center; gap: 2px; }
+    .stag { background: #FFF0EB; color: #E64A19; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; display: inline-block; }
+    .ftab { padding: 7px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; border: none; background: none; color: #999; font-family: 'Outfit', sans-serif; white-space: nowrap; transition: all .15s; }
+    .ftab.on { background: #FF5722; color: white; }
+    .ptab { flex: 1; padding: 11px 6px; background: none; border: none; border-bottom: 2px solid transparent; font-size: 12px; font-weight: 600; cursor: pointer; color: #AAA; font-family: 'Outfit', sans-serif; transition: all .2s; text-align: center; }
+    .ptab.on { color: #FF5722; border-bottom-color: #FF5722; }
+    .hcard { background: white; border-radius: 16px; border: 1px solid #E5E5EA; padding: 14px; margin-bottom: 10px; }
+    .tip { background: #F2F2F7; border: 1px solid #E5E5EA; border-radius: 20px; padding: 7px 13px; font-size: 12px; font-weight: 500; color: #555; cursor: pointer; font-family: 'Outfit', sans-serif; transition: all .15s; display: inline-block; margin: 4px 3px 0 0; }
+    .tip.on { background: #FFF0EB; border-color: #FF5722; color: #FF5722; }
+    .zone { border: 1px solid #E5E5EA; border-radius: 10px; padding: 9px 12px; font-size: 12px; font-weight: 600; color: #555; cursor: pointer; font-family: 'Outfit', sans-serif; transition: all .15s; text-align: center; }
+    .zone.on { background: #FFF0EB; border-color: #FF5722; color: #FF5722; }
+    .star-big { font-size: 36px; cursor: pointer; color: #DEDEDE; transition: color .1s; background: none; border: none; padding: 2px 5px; line-height: 1; }
+    .star-big.on { color: #FF5722; }
+    .star-sm { font-size: 19px; cursor: pointer; color: #DEDEDE; transition: color .1s; background: none; border: none; padding: 1px; line-height: 1; }
+    .star-sm.on { color: #FF5722; }
+    .pill-on { background: #FFF3E0; color: #E65100; padding: 3px 9px; border-radius: 20px; font-size: 10px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; }
+    .pill-done { background: #E8F5E9; color: #2E7D32; padding: 3px 9px; border-radius: 20px; font-size: 10px; font-weight: 700; }
+    .pill-cancel { background: #FFEBEE; color: #C62828; padding: 3px 9px; border-radius: 20px; font-size: 10px; font-weight: 700; }
+    .pitem { display: flex; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid #F2F2F7; cursor: pointer; }
+    .galtile { border-radius: 14px; padding: 16px 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; aspect-ratio: 1; text-align: center; }
+    .rev-card { background: #F8F8FB; border-radius: 14px; padding: 14px; margin-bottom: 10px; border: 1px solid #EDEDF0; }
+    .benefit-card { background: #F8F8FB; border-radius: 14px; padding: 14px; display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; border: 1px solid #EDEDF0; }
+    .atab { flex: 1; padding: 10px; background: none; border: none; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; color: #999; font-family: 'Outfit', sans-serif; transition: all .2s; }
+    .atab.on { background: #FF5722; color: white; }
+
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+    .pdot { width: 7px; height: 7px; background: #FF5722; border-radius: 50%; animation: pulse 1.5s ease-in-out infinite; display: inline-block; margin-right: 4px; vertical-align: middle; }
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <!-- STATUS BAR -->
+  <div id="status-bar">
+    <span id="sb-time">9:41</span>
+    <div id="sb-pill"></div>
+    <div id="sb-icons">
+      <i class="ti ti-wifi" style="color:white;font-size:14px;"></i>
+      <i class="ti ti-battery-3" style="color:white;font-size:14px;"></i>
     </div>
+  </div>
 
-    <div class="auth-modal" id="auth-modal" aria-hidden="true">
-      <div class="modal-backdrop" data-close-auth></div>
-      <section class="auth-card" role="dialog" aria-modal="true" aria-labelledby="auth-title">
-        <button class="close-btn" data-close-auth aria-label="Cerrar">x</button>
-        <div class="tabs" role="tablist">
-          <button class="tab active" data-auth-tab="login">Inicio de sesión</button>
-          <button class="tab" data-auth-tab="register">Registro</button>
+  <!-- ══════ SPLASH ══════ -->
+  <div id="s-splash" class="screen no-nav" style="background:#1E3A5F;">
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:36px 28px;text-align:center;">
+      <div style="width:150px;height:150px;background:white;border-radius:30px;overflow:hidden;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+        <img src="multifix-logo-original.png" alt="MultiFix" style="width:140px;height:140px;object-fit:contain;"/>
+      </div>
+      <p style="font-size:13px;color:rgba(255,255,255,.75);margin-bottom:40px;line-height:1.6;max-width:230px;">Expertos verificados a un toque de distancia</p>
+      <div style="display:flex;width:100%;background:rgba(255,255,255,.1);border-radius:18px;overflow:hidden;margin-bottom:36px;">
+        <div style="flex:1;padding:14px 8px;text-align:center;border-right:0.5px solid rgba(255,255,255,.2);">
+          <p style="font-size:19px;font-weight:800;color:white;">500+</p>
+          <p style="font-size:10px;color:rgba(255,255,255,.65);margin-top:2px;">Prestadores</p>
         </div>
-        <form class="auth-form active" id="login-form">
-          <h2 id="auth-title">Bienvenido de nuevo</h2>
-          <label>
-            Correo
-            <input type="email" placeholder="correo@ejemplo.com" required />
-          </label>
-          <label>
-            Contraseña
-            <input type="password" placeholder="Tu contraseña" required />
-          </label>
-          <button class="primary-btn full" type="submit">Entrar</button>
-        </form>
-        <form class="auth-form" id="register-form">
-          <h2>Crea tu cuenta</h2>
-          <label>
-            Nombre completo
-            <input type="text" placeholder="Tu nombre" required />
-          </label>
-          <label>
-            Correo
-            <input type="email" placeholder="correo@ejemplo.com" required />
-          </label>
-          <label>
-            Tipo de cuenta
-            <select required>
-              <option>Necesito un servicio</option>
-              <option>Quiero prestar servicios</option>
-            </select>
-          </label>
-          <label>
-            Contraseña
-            <input type="password" placeholder="Crea una contraseña" required />
-          </label>
-          <button class="primary-btn full" type="submit">Crear cuenta</button>
-        </form>
-        <p class="form-note" id="auth-message">Tus datos se validan para proteger tu cuenta y tus solicitudes.</p>
-      </section>
+        <div style="flex:1;padding:14px 8px;text-align:center;border-right:0.5px solid rgba(255,255,255,.2);">
+          <p style="font-size:19px;font-weight:800;color:white;">4.8★</p>
+          <p style="font-size:10px;color:rgba(255,255,255,.65);margin-top:2px;">Calificación</p>
+        </div>
+        <div style="flex:1;padding:14px 8px;text-align:center;">
+          <p style="font-size:19px;font-weight:800;color:white;">12K+</p>
+          <p style="font-size:10px;color:rgba(255,255,255,.65);margin-top:2px;">Servicios</p>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="go('s-auth')" style="border-radius:18px;">Comenzar →</button>
+      <p style="font-size:11px;color:rgba(255,255,255,.4);margin-top:14px;">Medellín y área metropolitana</p>
     </div>
+  </div>
 
-    <script src="./app.js"></script>
-  </body>
+  <!-- ══════ AUTH ══════ -->
+  <div id="s-auth" class="screen no-nav off" style="background:white;">
+    <div style="padding:28px 22px;">
+      <div style="text-align:center;margin-bottom:20px;">
+        <img src="multifix-logo-original.png" alt="MultiFix" style="width:100px;height:100px;object-fit:contain;"/>
+      </div>
+      <h2 style="font-size:22px;font-weight:800;color:#1A1A1A;">¡Bienvenido!</h2>
+      <p style="font-size:13px;color:#999;margin-top:3px;margin-bottom:22px;">Tu experto de confianza te espera</p>
+      <div style="display:flex;background:#F2F2F7;border-radius:12px;padding:4px;margin-bottom:20px;">
+        <button class="atab on" id="tab-l" onclick="authTab('l')">Iniciar sesión</button>
+        <button class="atab" id="tab-r" onclick="authTab('r')">Registrarse</button>
+      </div>
+      <div id="fl">
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <input class="inp" type="email" placeholder="Correo electrónico"/>
+          <input class="inp" type="password" placeholder="Contraseña"/>
+          <button class="btn-primary" onclick="go('s-home')" style="margin-top:4px;">Entrar</button>
+        </div>
+        <p style="text-align:center;font-size:12px;color:#BBB;margin-top:14px;">¿Olvidaste tu contraseña? <span style="color:#FF5722;font-weight:600;cursor:pointer;">Recuperar</span></p>
+      </div>
+      <div id="fr" style="display:none;">
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <input class="inp" type="text" placeholder="Nombre completo"/>
+          <input class="inp" type="email" placeholder="Correo electrónico"/>
+          <div style="position:relative;">
+            <select class="inp" style="appearance:none;cursor:pointer;">
+              <option>🏠 Necesito un servicio</option>
+              <option>🔧 Quiero prestar servicios</option>
+            </select>
+            <i class="ti ti-chevron-down" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);color:#888;pointer-events:none;font-size:14px;"></i>
+          </div>
+          <input class="inp" type="password" placeholder="Contraseña"/>
+          <button class="btn-primary" onclick="go('s-home')" style="margin-top:4px;">Crear cuenta</button>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin:18px 0;">
+        <div style="flex:1;height:1px;background:#F0F0F0;"></div>
+        <span style="font-size:11px;color:#CCC;">o continúa con</span>
+        <div style="flex:1;height:1px;background:#F0F0F0;"></div>
+      </div>
+      <button style="width:100%;padding:12px;background:white;border:1px solid #E5E5EA;border-radius:12px;font-size:13px;font-weight:600;color:#333;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:'Outfit',sans-serif;">
+        <i class="ti ti-brand-google" style="font-size:17px;color:#EA4335;"></i>Continuar con Google
+      </button>
+    </div>
+  </div>
+
+  <!-- ══════ HOME ══════ -->
+  <div id="s-home" class="screen off">
+    <div style="padding:18px 18px 0;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+        <div>
+          <p style="font-size:11px;color:#888;font-weight:500;">Buenos días 👋</p>
+          <h2 style="font-size:19px;font-weight:800;color:#1A1A1A;">¿Qué necesitas hoy?</h2>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <img src="multifix-logo-original.png" alt="MultiFix" style="width:36px;height:36px;object-fit:contain;border-radius:8px;background:white;padding:2px;border:1px solid #E5E5EA;"/>
+          <div style="position:relative;cursor:pointer;">
+            <i class="ti ti-bell" style="font-size:22px;color:#444;"></i>
+            <span style="position:absolute;top:-2px;right:-2px;width:8px;height:8px;background:#FF5722;border-radius:50%;border:1.5px solid #F2F2F7;"></span>
+          </div>
+        </div>
+      </div>
+      <div style="background:white;border-radius:14px;padding:11px 13px;display:flex;align-items:center;gap:9px;border:1px solid #E5E5EA;margin-bottom:14px;">
+        <i class="ti ti-search" style="font-size:17px;color:#BBB;"></i>
+        <span style="font-size:13px;color:#AAAAAA;">Buscar plomero, pintor, eléctrico...</span>
+      </div>
+      <div style="display:inline-flex;align-items:center;gap:5px;background:white;border:1px solid #E5E5EA;border-radius:22px;padding:5px 11px 5px 8px;margin-bottom:14px;">
+        <i class="ti ti-map-pin" style="font-size:13px;color:#FF5722;"></i>
+        <span style="font-size:11px;font-weight:600;color:#333;">Medellín, Antioquia</span>
+        <i class="ti ti-chevron-down" style="font-size:11px;color:#888;"></i>
+      </div>
+      <h3 style="font-size:13px;font-weight:700;color:#1A1A1A;margin-bottom:10px;">Categorías</h3>
+      <div style="display:flex;gap:7px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch;margin-bottom:16px;">
+        <button class="cat-chip on" onclick="filterCat(this,'all')"><i class="ti ti-layout-grid" style="font-size:12px;"></i>Todos</button>
+        <button class="cat-chip" onclick="filterCat(this,'plomeria')"><i class="ti ti-droplet" style="font-size:12px;"></i>Plomería</button>
+        <button class="cat-chip" onclick="filterCat(this,'electricidad')"><i class="ti ti-bolt" style="font-size:12px;"></i>Electricidad</button>
+        <button class="cat-chip" onclick="filterCat(this,'pintura')"><i class="ti ti-brush" style="font-size:12px;"></i>Pintura</button>
+        <button class="cat-chip" onclick="filterCat(this,'carpinteria')"><i class="ti ti-tools" style="font-size:12px;"></i>Carpintería</button>
+        <button class="cat-chip" onclick="filterCat(this,'mecanica')"><i class="ti ti-tool" style="font-size:12px;"></i>Mecánica</button>
+      </div>
+    </div>
+    <div style="padding:0 18px 16px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:11px;">
+        <h3 style="font-size:13px;font-weight:700;color:#1A1A1A;">Disponibles ahora</h3>
+        <span style="font-size:11px;color:#FF5722;font-weight:600;cursor:pointer;">Ver todos →</span>
+      </div>
+      <div id="plist"></div>
+      <div onclick="go('s-become')" style="background:#1E3A5F;border-radius:18px;padding:16px;display:flex;align-items:center;gap:14px;cursor:pointer;margin-bottom:16px;">
+        <img src="multifix-logo-original.png" alt="MultiFix" style="width:44px;height:44px;object-fit:contain;border-radius:10px;background:white;padding:3px;flex-shrink:0;"/>
+        <div style="flex:1;">
+          <p style="font-size:13px;font-weight:800;color:white;">¿Eres técnico o trabajador?</p>
+          <p style="font-size:11px;color:rgba(255,255,255,.6);margin-top:2px;">Únete como prestador y genera ingresos</p>
+        </div>
+        <i class="ti ti-chevron-right" style="font-size:18px;color:rgba(255,255,255,.4);"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════ PROVIDER DETAIL ══════ -->
+  <div id="s-provider" class="screen off" style="background:white;">
+    <div style="background:#FF5722;padding:16px 18px 40px;">
+      <button class="btn-ghost" onclick="go('s-home')" style="margin-bottom:14px;">
+        <i class="ti ti-arrow-left" style="font-size:22px;color:white;"></i>
+      </button>
+      <div style="display:flex;align-items:center;gap:14px;">
+        <div id="p-av" style="width:60px;height:60px;background:white;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;"></div>
+        <div>
+          <h2 id="p-name" style="font-size:18px;font-weight:800;color:white;"></h2>
+          <p id="p-spec" style="font-size:12px;color:rgba(255,255,255,.8);margin-top:2px;"></p>
+          <span class="vtag" id="p-vtag" style="margin-top:6px;"></span>
+        </div>
+      </div>
+    </div>
+    <div style="background:white;border-radius:22px 22px 0 0;margin-top:-18px;padding:16px 18px 0;">
+      <div style="display:flex;border-bottom:1px solid #F2F2F7;margin-bottom:14px;">
+        <button class="ptab on" id="ptab-info" onclick="setProvTab('info')">Información</button>
+        <button class="ptab" id="ptab-gallery" onclick="setProvTab('gallery')">Galería</button>
+        <button class="ptab" id="ptab-reviews" onclick="setProvTab('reviews')">Reseñas</button>
+      </div>
+      <!-- INFO -->
+      <div id="pt-info">
+        <div style="display:flex;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid #F2F2F7;">
+          <div style="flex:1;text-align:center;border-right:1px solid #F2F2F7;"><p id="p-rat" style="font-size:17px;font-weight:800;color:#FF5722;"></p><p style="font-size:10px;color:#888;margin-top:2px;">Calificación</p></div>
+          <div style="flex:1;text-align:center;border-right:1px solid #F2F2F7;"><p id="p-rev" style="font-size:17px;font-weight:800;color:#1A1A1A;"></p><p style="font-size:10px;color:#888;margin-top:2px;">Reseñas</p></div>
+          <div style="flex:1;text-align:center;"><p id="p-eta" style="font-size:17px;font-weight:800;color:#1A1A1A;"></p><p style="font-size:10px;color:#888;margin-top:2px;">Llegada aprox.</p></div>
+        </div>
+        <h3 style="font-size:13px;font-weight:700;color:#1A1A1A;margin-bottom:6px;">Sobre el prestador</h3>
+        <p id="p-bio" style="font-size:12px;color:#666;line-height:1.6;margin-bottom:14px;"></p>
+        <h3 style="font-size:13px;font-weight:700;color:#1A1A1A;margin-bottom:8px;">Especialidades</h3>
+        <div id="p-tags" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;"></div>
+        <div style="height:1px;background:#F2F2F7;margin:13px 0;"></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+          <div><p style="font-size:10px;color:#888;">Tarifa base desde</p><p id="p-price" style="font-size:21px;font-weight:800;color:#1A1A1A;"></p></div>
+          <div style="background:#E8F5E9;border-radius:12px;padding:10px 12px;text-align:center;"><i class="ti ti-shield-check" style="font-size:20px;color:#2E7D32;"></i><p style="font-size:10px;color:#2E7D32;font-weight:700;margin-top:2px;">Verificado</p></div>
+        </div>
+        <div style="display:flex;gap:9px;margin-bottom:12px;">
+          <button style="flex:1;padding:12px;background:#F2F2F7;border:none;border-radius:12px;font-size:13px;font-weight:600;color:#333;cursor:pointer;font-family:'Outfit',sans-serif;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="ti ti-message-circle" style="font-size:15px;"></i>Chat</button>
+          <button style="flex:1;padding:12px;background:#F2F2F7;border:none;border-radius:12px;font-size:13px;font-weight:600;color:#333;cursor:pointer;font-family:'Outfit',sans-serif;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="ti ti-phone" style="font-size:15px;"></i>Llamar</button>
+        </div>
+        <button class="btn-primary" onclick="go('s-booking')">Solicitar servicio →</button>
+      </div>
+      <!-- GALLERY -->
+      <div id="pt-gallery" style="display:none;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;"><p style="font-size:13px;font-weight:700;color:#1A1A1A;">Trabajos realizados</p><span id="gal-count" style="font-size:11px;color:#888;"></span></div>
+        <div id="gal-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px;"></div>
+        <button class="btn-primary" onclick="go('s-booking')">Solicitar servicio →</button>
+      </div>
+      <!-- REVIEWS -->
+      <div id="pt-reviews" style="display:none;">
+        <div style="display:flex;gap:14px;align-items:center;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid #F2F2F7;">
+          <div style="text-align:center;"><p id="rev-avg" style="font-size:36px;font-weight:800;color:#1A1A1A;line-height:1;"></p><div id="rev-stars" style="margin:4px 0;"></div><p id="rev-total" style="font-size:11px;color:#888;"></p></div>
+          <div style="flex:1;" id="rev-bars"></div>
+        </div>
+        <div id="rev-list"></div>
+        <button class="btn-primary" onclick="go('s-booking')" style="margin-top:4px;">Solicitar servicio →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════ BOOKING ══════ -->
+  <div id="s-booking" class="screen off">
+    <div style="padding:18px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+        <button class="btn-ghost" onclick="go('s-provider')"><i class="ti ti-arrow-left" style="font-size:21px;color:#1A1A1A;"></i></button>
+        <h2 style="font-size:17px;font-weight:800;color:#1A1A1A;">Reservar servicio</h2>
+      </div>
+      <div class="card" style="display:flex;align-items:center;gap:11px;">
+        <div id="bk-av" style="width:42px;height:42px;background:#FFF0EB;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;"></div>
+        <div style="flex:1;"><p id="bk-name" style="font-size:13px;font-weight:700;color:#1A1A1A;"></p><p id="bk-spec" style="font-size:11px;color:#888;margin-top:1px;"></p></div>
+        <div style="text-align:right;"><p id="bk-price" style="font-size:13px;font-weight:700;color:#FF5722;"></p><span style="color:#FF5722;font-size:10px;">★ </span><span id="bk-rat" style="font-size:10px;color:#888;"></span></div>
+      </div>
+      <div class="card">
+        <h3 style="font-size:12px;font-weight:700;color:#1A1A1A;margin-bottom:11px;display:flex;align-items:center;gap:5px;"><i class="ti ti-calendar" style="font-size:13px;color:#FF5722;"></i>¿Cuándo lo necesitas?</h3>
+        <div id="date-row" style="display:flex;gap:7px;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch;"></div>
+      </div>
+      <div class="card">
+        <h3 style="font-size:12px;font-weight:700;color:#1A1A1A;margin-bottom:11px;display:flex;align-items:center;gap:5px;"><i class="ti ti-clock" style="font-size:13px;color:#FF5722;"></i>Elige un horario</h3>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px;">
+          <div class="time-slot on" onclick="selTime(this)">8:00 AM</div><div class="time-slot" onclick="selTime(this)">9:00 AM</div><div class="time-slot" onclick="selTime(this)">10:00 AM</div>
+          <div class="time-slot" onclick="selTime(this)">11:00 AM</div><div class="time-slot" onclick="selTime(this)">2:00 PM</div><div class="time-slot" onclick="selTime(this)">4:00 PM</div>
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="font-size:12px;font-weight:700;color:#1A1A1A;margin-bottom:10px;display:flex;align-items:center;gap:5px;"><i class="ti ti-map-pin" style="font-size:13px;color:#FF5722;"></i>Dirección del servicio</h3>
+        <input class="inp" type="text" value="Cra 43A #18-20, El Poblado"/>
+        <p style="font-size:10px;color:#AAA;margin-top:7px;">Medellín, Antioquia</p>
+      </div>
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="font-size:12px;color:#888;">Tarifa base</span><span id="s-base" style="font-size:12px;font-weight:600;color:#1A1A1A;"></span></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span style="font-size:12px;color:#888;">Comisión plataforma (12%)</span><span id="s-com" style="font-size:12px;font-weight:600;color:#1A1A1A;"></span></div>
+        <div style="height:1px;background:#F2F2F7;margin:10px 0;"></div>
+        <div style="display:flex;justify-content:space-between;"><span style="font-size:13px;font-weight:700;color:#1A1A1A;">Total estimado</span><span id="s-total" style="font-size:14px;font-weight:800;color:#FF5722;"></span></div>
+      </div>
+      <button class="btn-primary" onclick="goConfirm()">Confirmar reserva →</button>
+    </div>
+  </div>
+
+  <!-- ══════ CONFIRM ══════ -->
+  <div id="s-confirm" class="screen no-nav off" style="background:white;">
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;padding:36px 24px;text-align:center;">
+      <div style="width:76px;height:76px;background:#E8F5E9;border-radius:24px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;"><i class="ti ti-check" style="font-size:38px;color:#2E7D32;"></i></div>
+      <h2 style="font-size:22px;font-weight:800;color:#1A1A1A;margin-bottom:7px;">¡Reserva confirmada!</h2>
+      <p style="font-size:13px;color:#888;margin-bottom:28px;line-height:1.6;max-width:250px;">Tu solicitud fue enviada. Recibirás confirmación en menos de 10 minutos.</p>
+      <div class="card" style="width:100%;margin-bottom:20px;text-align:left;">
+        <div style="display:flex;align-items:center;gap:11px;margin-bottom:14px;">
+          <div id="cf-av" style="width:40px;height:40px;background:#FFF0EB;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;"></div>
+          <div><p id="cf-name" style="font-size:14px;font-weight:700;color:#1A1A1A;"></p><p id="cf-spec" style="font-size:11px;color:#888;"></p></div>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <div style="flex:1;background:#F2F2F7;border-radius:11px;padding:11px;text-align:center;"><i class="ti ti-clock" style="font-size:17px;color:#FF5722;"></i><p id="cf-eta" style="font-size:12px;font-weight:700;color:#1A1A1A;margin-top:3px;"></p><p style="font-size:9px;color:#888;">Llegada estimada</p></div>
+          <div style="flex:1;background:#F2F2F7;border-radius:11px;padding:11px;text-align:center;"><i class="ti ti-map-pin" style="font-size:17px;color:#FF5722;"></i><p style="font-size:12px;font-weight:700;color:#1A1A1A;margin-top:3px;">El Poblado</p><p style="font-size:9px;color:#888;">Tu dirección</p></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:9px;width:100%;margin-bottom:12px;">
+        <button style="flex:1;padding:12px;background:#F2F2F7;border:none;border-radius:12px;font-size:13px;font-weight:600;color:#333;cursor:pointer;font-family:'Outfit',sans-serif;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="ti ti-message-circle" style="font-size:15px;"></i>Chat</button>
+        <button style="flex:1;padding:12px;background:#F2F2F7;border:none;border-radius:12px;font-size:13px;font-weight:600;color:#333;cursor:pointer;font-family:'Outfit',sans-serif;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="ti ti-map" style="font-size:15px;"></i>Rastrear</button>
+      </div>
+      <button class="btn-primary" onclick="go('s-home')">Volver al inicio</button>
+    </div>
+  </div>
+
+  <!-- ══════ HISTORY ══════ -->
+  <div id="s-history" class="screen off">
+    <div style="padding:18px 18px 0;">
+      <h2 style="font-size:19px;font-weight:800;color:#1A1A1A;margin-bottom:16px;">Mis servicios</h2>
+      <div style="display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch;margin-bottom:18px;">
+        <button class="ftab on" id="ft-all" onclick="filterHist(this,'all')">Todos</button>
+        <button class="ftab" onclick="filterHist(this,'en_curso')">En curso</button>
+        <button class="ftab" onclick="filterHist(this,'completado')">Completados</button>
+        <button class="ftab" onclick="filterHist(this,'cancelado')">Cancelados</button>
+      </div>
+    </div>
+    <div style="padding:0 18px 16px;" id="hlist"></div>
+  </div>
+
+  <!-- ══════ RATING ══════ -->
+  <div id="s-rating" class="screen no-nav off" style="background:white;">
+    <div style="padding:18px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+        <button class="btn-ghost" onclick="go('s-history')"><i class="ti ti-arrow-left" style="font-size:21px;color:#1A1A1A;"></i></button>
+        <h2 style="font-size:17px;font-weight:800;color:#1A1A1A;">Califica el servicio</h2>
+      </div>
+      <div class="card" style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+        <div id="rt-av" style="width:44px;height:44px;background:#FFF0EB;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;"></div>
+        <div><p id="rt-name" style="font-size:14px;font-weight:700;color:#1A1A1A;"></p><p id="rt-spec" style="font-size:11px;color:#888;margin-top:1px;"></p></div>
+      </div>
+      <div class="card" style="text-align:center;margin-bottom:12px;">
+        <p style="font-size:13px;font-weight:700;color:#1A1A1A;margin-bottom:14px;">¿Cómo fue tu experiencia general?</p>
+        <div style="display:flex;justify-content:center;gap:2px;margin-bottom:8px;">
+          <button class="star-big" id="ms1" onclick="setMainStar(1)">★</button><button class="star-big" id="ms2" onclick="setMainStar(2)">★</button><button class="star-big" id="ms3" onclick="setMainStar(3)">★</button><button class="star-big" id="ms4" onclick="setMainStar(4)">★</button><button class="star-big" id="ms5" onclick="setMainStar(5)">★</button>
+        </div>
+        <p id="star-label" style="font-size:13px;color:#888;min-height:18px;">Toca para calificar</p>
+      </div>
+      <div class="card" style="margin-bottom:12px;">
+        <p style="font-size:13px;font-weight:700;color:#1A1A1A;margin-bottom:14px;">Calificación detallada</p>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid #F2F2F7;"><span style="font-size:12px;color:#555;font-weight:500;">Puntualidad</span><div style="display:flex;gap:2px;"><button class="star-sm" id="sp1" onclick="setSub('p',1)">★</button><button class="star-sm" id="sp2" onclick="setSub('p',2)">★</button><button class="star-sm" id="sp3" onclick="setSub('p',3)">★</button><button class="star-sm" id="sp4" onclick="setSub('p',4)">★</button><button class="star-sm" id="sp5" onclick="setSub('p',5)">★</button></div></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid #F2F2F7;"><span style="font-size:12px;color:#555;font-weight:500;">Calidad del trabajo</span><div style="display:flex;gap:2px;"><button class="star-sm" id="sc1" onclick="setSub('c',1)">★</button><button class="star-sm" id="sc2" onclick="setSub('c',2)">★</button><button class="star-sm" id="sc3" onclick="setSub('c',3)">★</button><button class="star-sm" id="sc4" onclick="setSub('c',4)">★</button><button class="star-sm" id="sc5" onclick="setSub('c',5)">★</button></div></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-size:12px;color:#555;font-weight:500;">Trato recibido</span><div style="display:flex;gap:2px;"><button class="star-sm" id="st1" onclick="setSub('t',1)">★</button><button class="star-sm" id="st2" onclick="setSub('t',2)">★</button><button class="star-sm" id="st3" onclick="setSub('t',3)">★</button><button class="star-sm" id="st4" onclick="setSub('t',4)">★</button><button class="star-sm" id="st5" onclick="setSub('t',5)">★</button></div></div>
+      </div>
+      <div class="card" style="margin-bottom:12px;">
+        <p style="font-size:13px;font-weight:700;color:#1A1A1A;margin-bottom:11px;">¿Qué destacarías?</p>
+        <div><span class="tip" onclick="this.classList.toggle('on')">Muy puntual</span><span class="tip" onclick="this.classList.toggle('on')">Excelente trabajo</span><span class="tip" onclick="this.classList.toggle('on')">Muy amable</span><span class="tip" onclick="this.classList.toggle('on')">Precio justo</span><span class="tip" onclick="this.classList.toggle('on')">Limpio y ordenado</span><span class="tip" onclick="this.classList.toggle('on')">Lo recomendaría</span></div>
+      </div>
+      <div class="card" style="margin-bottom:18px;">
+        <p style="font-size:13px;font-weight:700;color:#1A1A1A;margin-bottom:10px;">Cuéntanos cómo te fue</p>
+        <textarea class="inp" rows="3" placeholder="Escribe tu comentario (opcional)..." style="resize:none;line-height:1.5;"></textarea>
+      </div>
+      <button class="btn-primary" onclick="submitRating()">Enviar calificación →</button>
+    </div>
+  </div>
+
+  <!-- ══════ PROFILE ══════ -->
+  <div id="s-profile" class="screen off">
+    <div style="background:#1E3A5F;padding:20px 18px 50px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <h2 style="font-size:17px;font-weight:800;color:white;">Mi perfil</h2>
+        <img src="multifix-logo-original.png" alt="MultiFix" style="width:32px;height:32px;object-fit:contain;border-radius:8px;background:white;padding:2px;"/>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;">
+        <div style="width:60px;height:60px;background:#FF5722;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;color:white;flex-shrink:0;">SJ</div>
+        <div>
+          <p style="font-size:17px;font-weight:800;color:white;">Santiago Jaramillo</p>
+          <p style="font-size:12px;color:rgba(255,255,255,.65);margin-top:2px;">santiago@multifix.co</p>
+          <span style="background:rgba(255,255,255,.2);color:white;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;margin-top:6px;display:inline-block;">Cliente verificado</span>
+        </div>
+      </div>
+    </div>
+    <div style="background:white;border-radius:22px 22px 0 0;margin-top:-20px;padding:20px 18px;">
+      <div style="display:flex;gap:10px;margin-bottom:20px;">
+        <div style="flex:1;background:#F2F2F7;border-radius:14px;padding:14px;text-align:center;"><p style="font-size:22px;font-weight:800;color:#FF5722;" id="prof-count">4</p><p style="font-size:11px;color:#888;margin-top:2px;">Servicios</p></div>
+        <div style="flex:1;background:#F2F2F7;border-radius:14px;padding:14px;text-align:center;"><p style="font-size:22px;font-weight:800;color:#1A1A1A;">4.9</p><p style="font-size:11px;color:#888;margin-top:2px;">Calificación</p></div>
+        <div style="flex:1;background:#F2F2F7;border-radius:14px;padding:14px;text-align:center;"><p style="font-size:22px;font-weight:800;color:#1A1A1A;">2</p><p style="font-size:11px;color:#888;margin-top:2px;">Favoritos</p></div>
+      </div>
+      <div onclick="go('s-become')" style="background:#1E3A5F;border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer;margin-bottom:16px;">
+        <i class="ti ti-briefcase" style="font-size:20px;color:#FF5722;"></i>
+        <div style="flex:1;"><p style="font-size:13px;font-weight:700;color:white;">Registrarme como prestador</p><p style="font-size:11px;color:rgba(255,255,255,.5);margin-top:1px;">Genera ingresos con tus habilidades</p></div>
+        <i class="ti ti-chevron-right" style="font-size:16px;color:rgba(255,255,255,.3);"></i>
+      </div>
+      <div class="pitem"><div style="width:36px;height:36px;background:#FFF0EB;border-radius:10px;display:flex;align-items:center;justify-content:center;"><i class="ti ti-credit-card" style="font-size:18px;color:#FF5722;"></i></div><p style="flex:1;font-size:14px;font-weight:600;color:#1A1A1A;">Métodos de pago</p><i class="ti ti-chevron-right" style="font-size:16px;color:#BBB;"></i></div>
+      <div class="pitem"><div style="width:36px;height:36px;background:#FFF0EB;border-radius:10px;display:flex;align-items:center;justify-content:center;"><i class="ti ti-map-pin" style="font-size:18px;color:#FF5722;"></i></div><p style="flex:1;font-size:14px;font-weight:600;color:#1A1A1A;">Mis direcciones</p><i class="ti ti-chevron-right" style="font-size:16px;color:#BBB;"></i></div>
+      <div class="pitem"><div style="width:36px;height:36px;background:#FFF0EB;border-radius:10px;display:flex;align-items:center;justify-content:center;"><i class="ti ti-bell" style="font-size:18px;color:#FF5722;"></i></div><p style="flex:1;font-size:14px;font-weight:600;color:#1A1A1A;">Notificaciones</p><i class="ti ti-chevron-right" style="font-size:16px;color:#BBB;"></i></div>
+      <div class="pitem" style="border-bottom:none;"><div style="width:36px;height:36px;background:#FFEBEE;border-radius:10px;display:flex;align-items:center;justify-content:center;"><i class="ti ti-logout" style="font-size:18px;color:#C62828;"></i></div><p style="flex:1;font-size:14px;font-weight:600;color:#C62828;">Cerrar sesión</p></div>
+    </div>
+  </div>
+
+  <!-- ══════ BECOME PROVIDER ══════ -->
+  <div id="s-become" class="screen no-nav off">
+    <div style="background:#1E3A5F;padding:20px 18px 50px;">
+      <button class="btn-ghost" onclick="go('s-home')" style="margin-bottom:16px;"><i class="ti ti-arrow-left" style="font-size:22px;color:white;"></i></button>
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">
+        <img src="multifix-logo-original.png" alt="MultiFix" style="width:56px;height:56px;object-fit:contain;background:white;border-radius:16px;padding:4px;"/>
+        <div><h2 style="font-size:20px;font-weight:800;color:white;">Conviértete en prestador</h2><p style="font-size:12px;color:rgba(255,255,255,.6);margin-top:2px;">Genera ingresos con tus habilidades</p></div>
+      </div>
+    </div>
+    <div style="background:white;border-radius:22px 22px 0 0;margin-top:-20px;padding:20px 18px;">
+      <p style="font-size:13px;font-weight:700;color:#1A1A1A;margin-bottom:14px;">¿Por qué unirte?</p>
+      <div class="benefit-card"><div style="width:38px;height:38px;background:#FFF0EB;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ti ti-users" style="font-size:18px;color:#FF5722;"></i></div><div><p style="font-size:13px;font-weight:700;color:#1A1A1A;">Acceso a clientes verificados</p><p style="font-size:12px;color:#888;margin-top:2px;line-height:1.5;">Recibe solicitudes de clientes reales en tu zona sin tener que buscarlos.</p></div></div>
+      <div class="benefit-card"><div style="width:38px;height:38px;background:#E8F5E9;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ti ti-calendar-check" style="font-size:18px;color:#2E7D32;"></i></div><div><p style="font-size:13px;font-weight:700;color:#1A1A1A;">Tú decides cuándo trabajar</p><p style="font-size:12px;color:#888;margin-top:2px;line-height:1.5;">Define tu disponibilidad, zonas y tarifas con total flexibilidad.</p></div></div>
+      <div class="benefit-card"><div style="width:38px;height:38px;background:#E3F2FD;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ti ti-credit-card" style="font-size:18px;color:#1565C0;"></i></div><div><p style="font-size:13px;font-weight:700;color:#1A1A1A;">Pagos seguros y puntuales</p><p style="font-size:12px;color:#888;margin-top:2px;line-height:1.5;">Recibe tu pago directamente en tu cuenta tras cada servicio.</p></div></div>
+      <div style="background:#FFF8F5;border:1.5px solid #FFD5C2;border-radius:14px;padding:14px;margin-bottom:20px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><i class="ti ti-percent" style="font-size:16px;color:#FF5722;"></i><p style="font-size:13px;font-weight:700;color:#FF5722;">Comisión del 12% por servicio</p></div>
+        <p style="font-size:12px;color:#888;line-height:1.5;">Si el servicio vale <strong style="color:#1A1A1A;">$100.000</strong>, recibes <strong style="color:#1A1A1A;">$88.000</strong>. Sin cobros fijos.</p>
+      </div>
+      <button class="btn-primary" onclick="go('s-reg')">Registrarme como prestador</button>
+    </div>
+  </div>
+
+  <!-- ══════ REGISTRO MULTI-PASO ══════ -->
+  <div id="s-reg" class="screen no-nav off" style="background:white;">
+    <div style="padding:18px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+        <button class="btn-ghost" onclick="regBack()"><i class="ti ti-arrow-left" style="font-size:21px;color:#1A1A1A;"></i></button>
+        <h2 style="font-size:17px;font-weight:800;color:#1A1A1A;">Registro de prestador</h2>
+      </div>
+      <div style="display:flex;align-items:center;margin-bottom:24px;">
+        <div style="width:10px;height:10px;border-radius:50%;background:#FF5722;transition:all .3s;" id="sd1"></div>
+        <div style="flex:1;height:2px;background:#FF5722;transition:all .3s;" id="sl1"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:#E0E0E0;transition:all .3s;" id="sd2"></div>
+        <div style="flex:1;height:2px;background:#E0E0E0;transition:all .3s;" id="sl2"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:#E0E0E0;transition:all .3s;" id="sd3"></div>
+      </div>
+      <div id="reg-s1">
+        <div style="margin-bottom:18px;"><p style="font-size:16px;font-weight:800;color:#1A1A1A;">Tu información básica</p><p style="font-size:12px;color:#888;margin-top:2px;">Paso 1 de 3 · Datos personales</p></div>
+        <div style="display:flex;flex-direction:column;gap:11px;">
+          <input class="inp" type="text" placeholder="Nombre completo"/>
+          <input class="inp" type="tel" placeholder="Teléfono celular"/>
+          <div style="position:relative;"><select class="inp" style="appearance:none;cursor:pointer;"><option value="">Oficio principal</option><option>🔧 Plomería</option><option>⚡ Electricidad</option><option>🎨 Pintura</option><option>🪵 Carpintería</option><option>🔩 Mecánica</option></select><i class="ti ti-chevron-down" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);color:#888;pointer-events:none;font-size:14px;"></i></div>
+          <input class="inp" type="text" placeholder="Número de documento"/>
+        </div>
+        <button class="btn-primary" onclick="regNext()" style="margin-top:20px;">Siguiente →</button>
+      </div>
+      <div id="reg-s2" style="display:none;">
+        <div style="margin-bottom:18px;"><p style="font-size:16px;font-weight:800;color:#1A1A1A;">Tu experiencia</p><p style="font-size:12px;color:#888;margin-top:2px;">Paso 2 de 3 · Habilidades y verificación</p></div>
+        <div style="display:flex;flex-direction:column;gap:11px;">
+          <div style="position:relative;"><select class="inp" style="appearance:none;cursor:pointer;"><option>Menos de 1 año</option><option>1 a 3 años</option><option selected>3 a 5 años</option><option>5 a 10 años</option><option>Más de 10 años</option></select><i class="ti ti-chevron-down" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);color:#888;pointer-events:none;font-size:14px;"></i></div>
+          <textarea class="inp" rows="3" placeholder="Descríbete: qué servicios ofreces y tu experiencia..." style="resize:none;line-height:1.5;"></textarea>
+          <input class="inp" type="number" placeholder="Tarifa base estimada (COP)"/>
+          <div><p style="font-size:12px;font-weight:700;color:#1A1A1A;margin-bottom:10px;">Tipo de evidencia</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div class="zone on" onclick="this.classList.toggle('on')">Certificado SENA</div><div class="zone" onclick="this.classList.toggle('on')">Fotos de trabajos</div><div class="zone" onclick="this.classList.toggle('on')">RUT o registro</div><div class="zone" onclick="this.classList.toggle('on')">Referencias</div></div></div>
+          <div style="background:#F2F2F7;border-radius:12px;padding:13px;border:1px solid #E5E5EA;cursor:pointer;display:flex;align-items:center;gap:8px;"><i class="ti ti-upload" style="font-size:18px;color:#FF5722;"></i><div><p style="font-size:13px;font-weight:700;color:#1A1A1A;">Subir evidencias</p><p style="font-size:11px;color:#888;">Fotos, certificados o documentos</p></div></div>
+        </div>
+        <button class="btn-primary" onclick="regNext()" style="margin-top:20px;">Siguiente →</button>
+      </div>
+      <div id="reg-s3" style="display:none;">
+        <div style="margin-bottom:18px;"><p style="font-size:16px;font-weight:800;color:#1A1A1A;">Zonas y disponibilidad</p><p style="font-size:12px;color:#888;margin-top:2px;">Paso 3 de 3 · Configuración del servicio</p></div>
+        <div style="margin-bottom:16px;"><p style="font-size:12px;font-weight:700;color:#1A1A1A;margin-bottom:10px;">Zonas de atención en Medellín</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div class="zone on" onclick="this.classList.toggle('on')">El Poblado</div><div class="zone on" onclick="this.classList.toggle('on')">Laureles</div><div class="zone" onclick="this.classList.toggle('on')">Belén</div><div class="zone" onclick="this.classList.toggle('on')">Envigado</div><div class="zone" onclick="this.classList.toggle('on')">Robledo</div><div class="zone" onclick="this.classList.toggle('on')">Sabaneta</div></div></div>
+        <div style="margin-bottom:16px;"><p style="font-size:12px;font-weight:700;color:#1A1A1A;margin-bottom:10px;">Disponibilidad</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div class="zone on" onclick="this.classList.toggle('on')">Lun – Vie</div><div class="zone on" onclick="this.classList.toggle('on')">Sábados</div><div class="zone" onclick="this.classList.toggle('on')">Domingos</div><div class="zone" onclick="this.classList.toggle('on')">Urgencias 24h</div></div></div>
+        <div style="background:#FFF8F5;border:1.5px solid #FFD5C2;border-radius:14px;padding:14px;margin-bottom:20px;"><div style="display:flex;align-items:flex-start;gap:8px;"><i class="ti ti-info-circle" style="font-size:16px;color:#FF5722;margin-top:1px;"></i><div><p style="font-size:12px;font-weight:700;color:#FF5722;margin-bottom:3px;">Comisión del 12%</p><p style="font-size:11px;color:#888;line-height:1.5;">Solo sobre servicios finalizados. Sin cobros fijos para empezar.</p></div></div></div>
+        <button class="btn-primary" onclick="go('s-reg-ok')">Enviar a revisión →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════ REG OK ══════ -->
+  <div id="s-reg-ok" class="screen no-nav off" style="background:white;">
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;padding:40px 28px;text-align:center;">
+      <img src="multifix-logo-original.png" alt="MultiFix" style="width:90px;height:90px;object-fit:contain;margin-bottom:16px;"/>
+      <div style="width:68px;height:68px;background:#E8F5E9;border-radius:20px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;"><i class="ti ti-clock-check" style="font-size:34px;color:#2E7D32;"></i></div>
+      <h2 style="font-size:22px;font-weight:800;color:#1A1A1A;margin-bottom:8px;">¡Solicitud enviada!</h2>
+      <p style="font-size:13px;color:#888;margin-bottom:28px;line-height:1.65;max-width:260px;">Tu perfil está en revisión. El equipo MultiFix validará tus documentos en las próximas <strong style="color:#1A1A1A;">24 a 48 horas</strong>.</p>
+      <div class="card" style="width:100%;margin-bottom:24px;text-align:left;">
+        <p style="font-size:13px;font-weight:700;color:#1A1A1A;margin-bottom:14px;">¿Qué sigue?</p>
+        <div style="display:flex;gap:12px;margin-bottom:12px;"><div style="width:28px;height:28px;background:#FFF0EB;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="font-size:12px;font-weight:800;color:#FF5722;">1</span></div><div><p style="font-size:12px;font-weight:700;color:#1A1A1A;">Revisión de documentos</p><p style="font-size:11px;color:#888;margin-top:1px;">El equipo revisa tu información y evidencias.</p></div></div>
+        <div style="display:flex;gap:12px;margin-bottom:12px;"><div style="width:28px;height:28px;background:#FFF0EB;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="font-size:12px;font-weight:800;color:#FF5722;">2</span></div><div><p style="font-size:12px;font-weight:700;color:#1A1A1A;">Verificación y aprobación</p><p style="font-size:11px;color:#888;margin-top:1px;">Recibirás notificación cuando tu perfil esté activo.</p></div></div>
+        <div style="display:flex;gap:12px;"><div style="width:28px;height:28px;background:#E8F5E9;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="font-size:12px;font-weight:800;color:#2E7D32;">3</span></div><div><p style="font-size:12px;font-weight:700;color:#1A1A1A;">Empieza a recibir clientes</p><p style="font-size:11px;color:#888;margin-top:1px;">Tu perfil aparece y recibes solicitudes.</p></div></div>
+      </div>
+      <button class="btn-primary" onclick="go('s-home')">Volver al inicio</button>
+    </div>
+  </div>
+
+  <!-- ══════ BOTTOM NAV ══════ -->
+  <div id="bottom-nav" style="display:none;">
+    <button class="nb" id="nb-home" onclick="navTo('s-home')">
+      <i class="ti ti-home" style="font-size:21px;" id="ni-home"></i>
+      <span style="font-size:10px;font-weight:600;" id="nt-home">Inicio</span>
+    </button>
+    <button class="nb" id="nb-hist" onclick="navTo('s-history')">
+      <i class="ti ti-clock-history" style="font-size:21px;" id="ni-hist"></i>
+      <span style="font-size:10px;" id="nt-hist">Historial</span>
+    </button>
+    <button class="nb" onclick="navTo('s-home')">
+      <div style="width:46px;height:46px;background:#FF5722;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-top:-10px;border:3px solid white;">
+        <i class="ti ti-plus" style="font-size:21px;color:white;"></i>
+      </div>
+    </button>
+    <button class="nb">
+      <i class="ti ti-message-circle" style="font-size:21px;color:#CCC;"></i>
+      <span style="font-size:10px;color:#CCC;">Mensajes</span>
+    </button>
+    <button class="nb" id="nb-prof" onclick="navTo('s-profile')">
+      <i class="ti ti-user-circle" style="font-size:21px;" id="ni-prof"></i>
+      <span style="font-size:10px;" id="nt-prof">Perfil</span>
+    </button>
+  </div>
+
+</div><!-- #app -->
+
+<script>
+// ══ DATA ══
+const PS=[
+  {id:1,cat:'plomeria',name:'Carlos Ramírez',spec:'Plomero certificado SENA',rating:4.9,reviews:128,price:80000,eta:'25 min',ver:true,tags:['Urgencias','Tuberías','Baños'],bio:'10 años en Medellín. Especialista en fugas, instalaciones y reparaciones.',em:'👨🏽‍🔧',gallery:[{ic:'ti-droplet',bg:'#E3F2FD',lbl:'Instalación tubería'},{ic:'ti-tool',bg:'#E8F5E9',lbl:'Reparación fuga'},{ic:'ti-home',bg:'#FFF3E0',lbl:'Remodelación baño'},{ic:'ti-droplet',bg:'#F3E5F5',lbl:'Agua caliente'},{ic:'ti-certificate',bg:'#E8EAF6',lbl:'Certificado'},{ic:'ti-star',bg:'#FBE9E7',lbl:'Destacado'}],revData:[{init:'SL',name:'Sandra López',stars:5,date:'Hace 2 días',txt:'Llegó puntual y resolvió la fuga en menos de 1 hora.'},{init:'MR',name:'Mario Restrepo',stars:5,date:'Hace 1 semana',txt:'Excelente servicio, lo recomiendo totalmente.'},{init:'CP',name:'Carolina P.',stars:4,date:'Hace 2 semanas',txt:'Buen trabajo, reparación quedó perfecta.'}],revDist:[92,6,2,0,0]},
+  {id:2,cat:'electricidad',name:'Juan Pablo Mesa',spec:'Técnico eléctrico RETIE',rating:4.8,reviews:94,price:70000,eta:'20 min',ver:true,tags:['Instalaciones','Daños eléctricos','Breakers'],bio:'Certificado RETIE. Atiendo todo el Valle de Aburrá con garantía.',em:'👷🏽‍♂️',gallery:[{ic:'ti-bolt',bg:'#FFF9C4',lbl:'Instalación eléctrica'},{ic:'ti-plug',bg:'#E8F5E9',lbl:'Tomas y cables'},{ic:'ti-bulb',bg:'#FFF3E0',lbl:'Luminarias LED'},{ic:'ti-certificate',bg:'#F3E5F5',lbl:'Certificado RETIE'},{ic:'ti-bolt',bg:'#E3F2FD',lbl:'Panel breakers'},{ic:'ti-star',bg:'#E8EAF6',lbl:'Destacado'}],revData:[{init:'JP',name:'Juan P.',stars:5,date:'Hace 3 días',txt:'Solucionó el corto circuito rápidamente.'},{init:'AM',name:'Adriana M.',stars:5,date:'Hace 4 días',txt:'Instaló todo el sistema eléctrico del apartamento.'},{init:'RG',name:'Ricardo G.',stars:4,date:'Hace 10 días',txt:'Buen servicio, precio justo.'}],revDist:[88,10,2,0,0]},
+  {id:3,cat:'pintura',name:'Andrés Torres',spec:'Pintor de interiores',rating:4.7,reviews:63,price:95000,eta:'40 min',ver:true,tags:['Interiores','Estuco','Fachadas'],bio:'Maestro pintor con más de 8 años de trayectoria en Medellín.',em:'🧑🏽‍🎨',gallery:[{ic:'ti-brush',bg:'#F3E5F5',lbl:'Sala'},{ic:'ti-paint',bg:'#E8EAF6',lbl:'Estuco'},{ic:'ti-home',bg:'#E8F5E9',lbl:'Fachada'},{ic:'ti-brush',bg:'#FFF9C4',lbl:'Habitación infantil'},{ic:'ti-certificate',bg:'#FBE9E7',lbl:'Acabado fino'},{ic:'ti-star',bg:'#E3F2FD',lbl:'Destacado'}],revData:[{init:'LV',name:'Luisa V.',stars:5,date:'Hace 5 días',txt:'El trabajo quedó impecable.'},{init:'DM',name:'Diego M.',stars:4,date:'Hace 2 semanas',txt:'Buena calidad y precio justo.'},{init:'PT',name:'Patricia T.',stars:5,date:'Hace 3 semanas',txt:'Pintó toda la casa y quedó espectacular.'}],revDist:[80,14,4,2,0]},
+  {id:4,cat:'carpinteria',name:'Luis Morales',spec:'Ebanista y carpintero',rating:4.9,reviews:41,price:120000,eta:'35 min',ver:false,tags:['Muebles','Puertas','Pisos'],bio:'Fabricación y reparación de muebles a medida con garantía.',em:'🧑🏽‍🔧',gallery:[{ic:'ti-armchair',bg:'#FFF3E0',lbl:'Mueble a medida'},{ic:'ti-door',bg:'#E8F5E9',lbl:'Puerta'},{ic:'ti-square',bg:'#E3F2FD',lbl:'Piso madera'},{ic:'ti-tools',bg:'#F3E5F5',lbl:'Closet'},{ic:'ti-certificate',bg:'#FBE9E7',lbl:'Premium'},{ic:'ti-star',bg:'#E8EAF6',lbl:'Destacado'}],revData:[{init:'CS',name:'Camila S.',stars:5,date:'Hace 1 semana',txt:'Los muebles quedaron perfectos.'},{init:'FM',name:'Felipe M.',stars:5,date:'Hace 2 semanas',txt:'Excelente acabado y precio justo.'},{init:'NR',name:'Natalia R.',stars:4,date:'Hace 1 mes',txt:'Buen trabajo con excelente resultado.'}],revDist:[95,5,0,0,0]},
+  {id:5,cat:'mecanica',name:'Rodrigo Salazar',spec:'Mecánico automotriz',rating:4.6,reviews:77,price:110000,eta:'45 min',ver:true,tags:['Mantenimiento','Frenos','A/C'],bio:'Taller a domicilio. Sin moverse de casa. Toda clase de vehículos.',em:'👨🏽‍🔧',gallery:[{ic:'ti-car',bg:'#E8EAF6',lbl:'Mantenimiento'},{ic:'ti-tool',bg:'#FBE9E7',lbl:'Frenos'},{ic:'ti-wind',bg:'#E3F2FD',lbl:'A/C'},{ic:'ti-droplet',bg:'#FFF9C4',lbl:'Aceite'},{ic:'ti-battery',bg:'#E8F5E9',lbl:'Batería'},{ic:'ti-star',bg:'#F3E5F5',lbl:'Destacado'}],revData:[{init:'JA',name:'Jorge A.',stars:5,date:'Hace 4 días',txt:'Reparó los frenos en casa en 2 horas.'},{init:'MO',name:'Marcela O.',stars:4,date:'Hace 1 semana',txt:'Cargó el A/C y revisó el motor.'},{init:'HC',name:'Hernán C.',stars:5,date:'Hace 2 semanas',txt:'Mi carro no arrancaba y lo dejó listo en 1 hora.'}],revDist:[75,18,5,2,0]},
+  {id:6,cat:'plomeria',name:'Camilo Vega',spec:'Plomero general',rating:4.5,reviews:52,price:65000,eta:'30 min',ver:true,tags:['Sanitarios','Duchas','Fugas'],bio:'Rápido, económico y puntual. 7 años de experiencia.',em:'👷🏽',gallery:[{ic:'ti-droplet',bg:'#E3F2FD',lbl:'Ducha'},{ic:'ti-tool',bg:'#E8F5E9',lbl:'Sanitario'},{ic:'ti-home',bg:'#FFF3E0',lbl:'Grifo'},{ic:'ti-droplet',bg:'#F3E5F5',lbl:'Tubería'},{ic:'ti-certificate',bg:'#E8EAF6',lbl:'Garantizado'},{ic:'ti-star',bg:'#FBE9E7',lbl:'Destacado'}],revData:[{init:'VG',name:'Valentina G.',stars:5,date:'Hace 3 días',txt:'Súper puntual y resolvió la fuga rápido.'},{init:'ES',name:'Esteban S.',stars:4,date:'Hace 1 semana',txt:'Cambió el sanitario sin problema.'},{init:'KP',name:'Karen P.',stars:4,date:'Hace 2 semanas',txt:'Precio justo y trabajo correcto.'}],revDist:[70,20,8,2,0]}
+];
+let HIST=[
+  {id:101,provider:'Carlos Ramírez',spec:'Plomería',date:'Hoy, 8:00 AM',price:89600,status:'en_curso',em:'👨🏽‍🔧',eta:'25 min',rated:false,rating:0},
+  {id:102,provider:'Juan Pablo Mesa',spec:'Electricidad',date:'Ayer, 2:00 PM',price:78400,status:'completado',em:'👷🏽‍♂️',eta:'',rated:false,rating:0},
+  {id:103,provider:'Andrés Torres',spec:'Pintura',date:'8 May, 10:00 AM',price:106400,status:'completado',em:'🧑🏽‍🎨',eta:'',rated:true,rating:5},
+  {id:104,provider:'Luis Morales',spec:'Carpintería',date:'5 May, 9:00 AM',price:134400,status:'cancelado',em:'🧑🏽‍🔧',eta:'',rated:false,rating:0}
+];
+
+// ══ STATE ══
+let sel=null, selHId=null, cur='s-splash', mainStar=0, regStep=1;
+const fmt = n => '$' + Math.round(n).toLocaleString('es-CO');
+
+// ══ STATUS BAR CONFIG ══
+const SBC = {'s-splash':'#1E3A5F','s-auth':'#FFFFFF','s-home':'#FF5722','s-provider':'#FF5722','s-booking':'#F2F2F7','s-confirm':'#FFFFFF','s-history':'#FF5722','s-rating':'#FFFFFF','s-profile':'#1E3A5F','s-become':'#1E3A5F','s-reg':'#FFFFFF','s-reg-ok':'#FFFFFF'};
+const STC = {'s-splash':'white','s-auth':'#1A1A1A','s-home':'white','s-provider':'white','s-booking':'#1A1A1A','s-confirm':'#1A1A1A','s-history':'white','s-rating':'#1A1A1A','s-profile':'white','s-become':'white','s-reg':'#1A1A1A','s-reg-ok':'#1A1A1A'};
+const HASNAV = ['s-home','s-provider','s-booking','s-history','s-profile'];
+const NAVMAP = {'s-home':'home','s-history':'hist','s-profile':'prof'};
+
+// ══ NAVIGATION ══
+function updateSB(id) {
+  const sb = document.getElementById('status-bar');
+  sb.style.background = SBC[id] || '#FF5722';
+  const c = STC[id] || 'white';
+  document.getElementById('sb-time').style.color = c;
+  document.querySelectorAll('#sb-icons i').forEach(i => i.style.color = c);
+  document.getElementById('bottom-nav').style.display = HASNAV.includes(id) ? 'flex' : 'none';
+  ['home','hist','prof'].forEach(k => {
+    const active = NAVMAP[id] === k;
+    const ci = document.getElementById('ni-'+k), ct = document.getElementById('nt-'+k);
+    if (ci) ci.style.color = active ? '#FF5722' : '#CCC';
+    if (ct) { ct.style.color = active ? '#FF5722' : '#CCC'; ct.style.fontWeight = active ? '700' : '500'; }
+  });
+}
+
+function go(id) {
+  if (id === 's-booking') initBK();
+  if (id === 's-confirm') initCF();
+  if (id === 's-history') renderHist('all');
+  if (id === 's-reg') { regStep = 1; showRegStep(); }
+  document.getElementById(cur).classList.add('off');
+  document.getElementById(id).classList.remove('off');
+  document.getElementById(id).scrollTop = 0;
+  cur = id; updateSB(id);
+}
+function navTo(id) { go(id); }
+function authTab(t) {
+  document.getElementById('tab-l').classList.toggle('on', t==='l');
+  document.getElementById('tab-r').classList.toggle('on', t==='r');
+  document.getElementById('fl').style.display = t==='l' ? 'block' : 'none';
+  document.getElementById('fr').style.display = t==='r' ? 'block' : 'none';
+}
+
+// ══ HOME ══
+function filterCat(btn, cat) {
+  document.querySelectorAll('.cat-chip').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on'); renderP(cat);
+}
+function renderP(f) {
+  const list = f==='all' ? PS : PS.filter(p => p.cat===f);
+  document.getElementById('plist').innerHTML = list.map(p => `
+    <div style="background:white;border-radius:18px;border:1px solid #E5E5EA;padding:15px;cursor:pointer;margin-bottom:11px;" onclick="openP(${p.id})">
+      <div style="display:flex;align-items:center;gap:11px;margin-bottom:11px;">
+        <div style="width:46px;height:46px;background:#FFF0EB;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:22px;">${p.em}</div>
+        <div style="flex:1;"><div style="display:flex;align-items:center;gap:5px;"><p style="font-size:14px;font-weight:700;color:#1A1A1A;">${p.name}</p>${p.ver?'<span class="vtag">✓ Verificado</span>':''}</div><p style="font-size:11px;color:#888;margin-top:1px;">${p.spec}</p></div>
+        <div style="text-align:right;"><p style="font-size:14px;font-weight:800;color:#1A1A1A;">${fmt(p.price)}</p><p style="font-size:10px;color:#888;">base</p></div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:3px;"><span style="color:#FF5722;font-size:12px;">★</span><span style="font-size:12px;font-weight:700;color:#1A1A1A;">${p.rating}</span><span style="font-size:11px;color:#AAA;">(${p.reviews})</span></div>
+        <div style="display:flex;align-items:center;gap:4px;background:#F2F2F7;border-radius:18px;padding:4px 9px;"><i class="ti ti-clock" style="font-size:11px;color:#888;"></i><span style="font-size:11px;color:#555;font-weight:600;">${p.eta}</span></div>
+      </div>
+    </div>`).join('');
+}
+
+// ══ PROVIDER ══
+function openP(id) {
+  sel = PS.find(p => p.id===id);
+  document.getElementById('p-av').textContent = sel.em;
+  document.getElementById('p-name').textContent = sel.name;
+  document.getElementById('p-spec').textContent = sel.spec;
+  document.getElementById('p-vtag').innerHTML = sel.ver ? '✓ Verificado' : 'En revisión';
+  document.getElementById('p-rat').textContent = sel.rating + ' ★';
+  document.getElementById('p-rev').textContent = sel.reviews;
+  document.getElementById('p-eta').textContent = sel.eta;
+  document.getElementById('p-bio').textContent = sel.bio;
+  document.getElementById('p-price').textContent = fmt(sel.price);
+  document.getElementById('p-tags').innerHTML = sel.tags.map(t=>`<span class="stag">${t}</span>`).join('');
+  setProvTab('info'); go('s-provider');
+}
+function setProvTab(t) {
+  ['info','gallery','reviews'].forEach(k => {
+    document.getElementById('ptab-'+k).classList.toggle('on', k===t);
+    document.getElementById('pt-'+k).style.display = k===t ? 'block' : 'none';
+  });
+  if (t==='gallery' && sel) renderGallery();
+  if (t==='reviews' && sel) renderReviews();
+}
+function renderGallery() {
+  document.getElementById('gal-count').textContent = sel.gallery.length + ' trabajos';
+  document.getElementById('gal-grid').innerHTML = sel.gallery.map(g =>
+    `<div class="galtile" style="background:${g.bg};"><i class="ti ${g.ic}" style="font-size:28px;color:#555;"></i><p style="font-size:11px;font-weight:600;color:#444;line-height:1.3;">${g.lbl}</p></div>`).join('');
+}
+function renderReviews() {
+  document.getElementById('rev-avg').textContent = sel.rating;
+  document.getElementById('rev-stars').innerHTML = `<span style="color:#FF5722;font-size:14px;">${'★'.repeat(Math.floor(sel.rating))}</span>`;
+  document.getElementById('rev-total').textContent = sel.reviews + ' reseñas';
+  document.getElementById('rev-bars').innerHTML = [5,4,3,2,1].map((n,i) =>
+    `<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;"><span style="font-size:10px;color:#888;width:12px;">${n}</span><div style="flex:1;height:5px;background:#F2F2F7;border-radius:3px;"><div style="width:${sel.revDist[i]}%;height:100%;background:#FF5722;border-radius:3px;"></div></div><span style="font-size:10px;color:#AAA;width:24px;">${sel.revDist[i]}%</span></div>`).join('');
+  document.getElementById('rev-list').innerHTML = sel.revData.map(r =>
+    `<div class="rev-card"><div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;"><div style="width:34px;height:34px;background:#FF5722;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0;">${r.init}</div><div style="flex:1;"><p style="font-size:13px;font-weight:700;color:#1A1A1A;">${r.name}</p><p style="font-size:10px;color:#AAA;">${r.date}</p></div><span style="color:#FF5722;font-size:13px;">${'★'.repeat(r.stars)}</span></div><p style="font-size:12px;color:#555;line-height:1.6;">${r.txt}</p></div>`).join('');
+}
+
+// ══ BOOKING ══
+function initBK() {
+  if (!sel) return;
+  document.getElementById('bk-av').textContent = sel.em;
+  document.getElementById('bk-name').textContent = sel.name;
+  document.getElementById('bk-spec').textContent = sel.spec;
+  document.getElementById('bk-price').textContent = fmt(sel.price);
+  document.getElementById('bk-rat').textContent = sel.rating;
+  const base=sel.price, com=Math.round(base*.12), tot=base+com;
+  document.getElementById('s-base').textContent = fmt(base);
+  document.getElementById('s-com').textContent = fmt(com);
+  document.getElementById('s-total').textContent = fmt(tot);
+  const days=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'], now=new Date();
+  let h='';
+  for(let i=0;i<7;i++){
+    const d=new Date(now); d.setDate(now.getDate()+i); const on=i===0;
+    h+=`<div onclick="selDate(this)" style="flex-shrink:0;text-align:center;border-radius:11px;padding:9px 11px;cursor:pointer;font-family:'Outfit',sans-serif;border:1px solid ${on?'#FF5722':'#E5E5EA'};background:${on?'#FF5722':'white'};color:${on?'white':'#444'};transition:all .15s;"><p style="font-size:9px;font-weight:500;margin-bottom:2px;">${days[d.getDay()]}</p><p style="font-size:15px;font-weight:800;">${d.getDate()}</p></div>`;
+  }
+  document.getElementById('date-row').innerHTML = h;
+}
+function selDate(el) {
+  document.querySelectorAll('#date-row>div').forEach(d=>{d.style.background='white';d.style.color='#444';d.style.borderColor='#E5E5EA';});
+  el.style.background='#FF5722'; el.style.color='white'; el.style.borderColor='#FF5722';
+}
+function selTime(el) { document.querySelectorAll('.time-slot').forEach(t=>t.classList.remove('on')); el.classList.add('on'); }
+function initCF() {
+  if (!sel) return;
+  document.getElementById('cf-av').textContent = sel.em;
+  document.getElementById('cf-name').textContent = sel.name;
+  document.getElementById('cf-spec').textContent = sel.spec;
+  document.getElementById('cf-eta').textContent = sel.eta;
+}
+function goConfirm() {
+  if (sel) {
+    const tot = sel.price + Math.round(sel.price*.12);
+    HIST.unshift({id:Date.now(),provider:sel.name,spec:sel.spec,date:'Hoy',price:tot,status:'en_curso',em:sel.em,eta:sel.eta,rated:false,rating:0});
+    document.getElementById('prof-count').textContent = HIST.length;
+  }
+  go('s-confirm');
+}
+
+// ══ HISTORY ══
+function filterHist(btn, f) {
+  document.querySelectorAll('.ftab').forEach(t=>t.classList.remove('on'));
+  btn.classList.add('on'); renderHist(f);
+}
+function renderHist(f) {
+  const list = f==='all' ? HIST : HIST.filter(h=>h.status===f);
+  if (!list.length) { document.getElementById('hlist').innerHTML='<div style="text-align:center;padding:40px 20px;"><i class="ti ti-clipboard-list" style="font-size:40px;color:#CCC;"></i><p style="font-size:13px;color:#AAA;margin-top:12px;">No hay servicios en esta categoría</p></div>'; return; }
+  document.getElementById('hlist').innerHTML = list.map(h => {
+    const sHtml = h.status==='en_curso' ? `<span class="pill-on"><span class="pdot"></span>En curso</span>` : h.status==='completado' ? `<span class="pill-done">✓ Completado</span>` : `<span class="pill-cancel">✗ Cancelado</span>`;
+    let ex = '';
+    if (h.status==='en_curso') ex=`<div style="margin-top:12px;padding-top:12px;border-top:1px solid #F2F2F7;"><div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;"><i class="ti ti-navigation" style="font-size:13px;color:#FF5722;"></i><span style="font-size:11px;color:#666;font-weight:600;">En camino · Llega en ${h.eta}</span></div><div style="display:flex;gap:7px;"><button style="flex:1;padding:8px;background:#F2F2F7;border:none;border-radius:10px;font-size:11px;font-weight:600;color:#333;cursor:pointer;font-family:'Outfit',sans-serif;">Llamar</button><button style="flex:1;padding:8px;background:#F2F2F7;border:none;border-radius:10px;font-size:11px;font-weight:600;color:#333;cursor:pointer;font-family:'Outfit',sans-serif;">Chat</button><button style="flex:1;padding:8px;background:#FFF0EB;border:none;border-radius:10px;font-size:11px;font-weight:600;color:#FF5722;cursor:pointer;font-family:'Outfit',sans-serif;">Rastrear</button></div></div>`;
+    else if (h.status==='completado'&&!h.rated) ex=`<div style="margin-top:12px;padding-top:12px;border-top:1px solid #F2F2F7;"><button onclick="openRating(${h.id})" style="width:100%;padding:10px;background:#FF5722;border:none;border-radius:11px;font-size:13px;font-weight:700;color:white;cursor:pointer;font-family:'Outfit',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;"><i class="ti ti-star" style="font-size:14px;"></i>Calificar servicio</button></div>`;
+    else if (h.status==='completado'&&h.rated) ex=`<div style="margin-top:10px;display:flex;align-items:center;gap:4px;"><span style="color:#FF5722;font-size:13px;">${'★'.repeat(h.rating)}</span><span style="font-size:11px;color:#888;">Calificado</span></div>`;
+    else ex=`<div style="margin-top:12px;padding-top:12px;border-top:1px solid #F2F2F7;"><button style="width:100%;padding:10px;background:#F2F2F7;border:none;border-radius:11px;font-size:13px;font-weight:600;color:#555;cursor:pointer;font-family:'Outfit',sans-serif;">Reprogramar servicio</button></div>`;
+    return `<div class="hcard"><div style="display:flex;align-items:center;gap:11px;"><div style="width:44px;height:44px;background:#FFF0EB;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0;">${h.em}</div><div style="flex:1;"><p style="font-size:14px;font-weight:700;color:#1A1A1A;">${h.provider}</p><p style="font-size:11px;color:#888;margin-top:1px;">${h.spec} · ${h.date}</p></div><div style="text-align:right;">${sHtml}<p style="font-size:13px;font-weight:700;color:#1A1A1A;margin-top:5px;">${fmt(h.price)}</p></div></div>${ex}</div>`;
+  }).join('');
+}
+
+// ══ RATING ══
+function openRating(hid) {
+  selHId=hid; const h=HIST.find(x=>x.id===hid);
+  document.getElementById('rt-av').textContent=h.em;
+  document.getElementById('rt-name').textContent=h.provider;
+  document.getElementById('rt-spec').textContent=h.spec;
+  mainStar=0;
+  document.querySelectorAll('.star-big,.star-sm').forEach(s=>s.classList.remove('on'));
+  document.getElementById('star-label').textContent='Toca para calificar';
+  document.querySelectorAll('.tip').forEach(t=>t.classList.remove('on'));
+  go('s-rating');
+}
+const sL=['','Mala','Regular','Buena','Muy buena','Excelente'];
+function setMainStar(n) {
+  mainStar=n;
+  for(let i=1;i<=5;i++){const e=document.getElementById('ms'+i);if(e)e.classList.toggle('on',i<=n);}
+  document.getElementById('star-label').textContent=sL[n]||'';
+}
+const sMap={p:'sp',c:'sc',t:'st'};
+function setSub(cat,n) { const pf=sMap[cat]; for(let i=1;i<=5;i++){const e=document.getElementById(pf+i);if(e)e.classList.toggle('on',i<=n);} }
+function submitRating() {
+  if (mainStar===0) { document.getElementById('star-label').textContent='Por favor selecciona una calificación'; document.getElementById('star-label').style.color='#FF5722'; return; }
+  const h=HIST.find(x=>x.id===selHId); if(h){h.rated=true;h.rating=mainStar;}
+  go('s-history'); setTimeout(()=>renderHist('all'),100);
+}
+
+// ══ REGISTRO ══
+function showRegStep() {
+  [1,2,3].forEach(n=>{document.getElementById('reg-s'+n).style.display=n===regStep?'block':'none';});
+  [1,2,3].forEach(n=>{document.getElementById('sd'+n).style.background=n<=regStep?'#FF5722':'#E0E0E0';});
+  [1,2].forEach(n=>{document.getElementById('sl'+n).style.background=n<regStep?'#FF5722':'#E0E0E0';});
+}
+function regNext() { if(regStep<3){regStep++;showRegStep();document.getElementById('s-reg').scrollTop=0;} }
+function regBack() { if(regStep>1){regStep--;showRegStep();}else{go('s-become');} }
+
+// ══ CLOCK ══
+function updateTime() {
+  const now=new Date();
+  const h=now.getHours().toString().padStart(2,'0');
+  const m=now.getMinutes().toString().padStart(2,'0');
+  document.getElementById('sb-time').textContent=h+':'+m;
+}
+updateTime(); setInterval(updateTime,60000);
+
+// ══ INIT ══
+renderP('all');
+
+// ══ PWA SERVICE WORKER ══
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js')
+      .then(r => console.log('[MultiFix] SW registrado:', r.scope))
+      .catch(e => console.log('[MultiFix] SW error:', e));
+  });
+}
+</script>
+</body>
 </html>
