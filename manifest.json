@@ -2,11 +2,12 @@
   "name": "MultiFix",
   "short_name": "MultiFix",
   "description": "Expertos del hogar verificados a un toque de distancia",
-  "start_url": "/index.html",
+  "start_url": "/multifix/",
+  "scope": "/multifix/",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#1E3A5F",
   "theme_color": "#FF5722",
-  "orientation": "portrait",
   "icons": [
     {
       "src": "multifix-logo-original.png",
@@ -18,9 +19,5 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ],
-  "categories": ["utilities", "lifestyle"],
-  "lang": "es",
-  "dir": "ltr",
-  "scope": "/"
+  ]
 }
